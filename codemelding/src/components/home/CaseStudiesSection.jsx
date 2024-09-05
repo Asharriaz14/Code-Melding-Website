@@ -82,7 +82,8 @@ function CaseStudies() {
                                     {study.links.map((link, idx) => (
                                         <CustomLink
                                             key={idx}
-                                            to={link.url}
+                                            // to={link.url}
+                                            to="/"
                                             className={`py-3 px-6 text-sm rounded-xl font-medium ${
                                                 idx === 1 ? 'bg-white text-orange-500 border border-[#DADADA]' : ''
                                             }`}
@@ -102,7 +103,7 @@ function CaseStudies() {
                 ))}
             </Slider>
             <div className="flex justify-center items-center mt-16">
-                <CustomLink className='py-3 px-8 rounded-lg'> View All </CustomLink>
+                <CustomLink  to="/" className='py-3 px-8 rounded-lg' > View All </CustomLink>
             </div>
         </div>
     );

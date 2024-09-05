@@ -25,7 +25,9 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 w-full bg-white p-4 lg:py-5 lg:px-16 flex items-center justify-between  z-50">
       {/* Left Side: Logo */}
       <div className="flex items-center">
+        <Link to='/'>
         <img src={CompanyLogo} alt="Logo" className="h-10" />
+        </Link>
       </div>
 
       {/* Mobile Menu Button */}

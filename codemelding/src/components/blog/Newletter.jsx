@@ -2,39 +2,32 @@ import Button from "../buttons/button";
 
 function Newsletter() {
   return (
-    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12  ">
+      <div className="max-w-screen-lg mx-auto bg-[#F5F5F5] p-8 rounded-lg">
+        <div className="flex flex-col lg:flex-row items-center">
+          <div className="lg:w-1/2 lg:pr-8 py-2 md:py-4 text-center lg:text-left">
+            <h2 className="text-xl md:text-3xl font-bold tracking-tight text-Content mb-4">
+              Want to know more? — Subscribe
+            </h2>
+          </div>
 
-      <div className="rounded-3xl bg-gray-900 py-10  sm:py-16 sm:px-12 lg:flex lg:items-center lg:p-20">
-        <div className="lg:w-0 lg:flex-1">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
-          Want to know more? — Subscribe
-          </h2>
-         
-        </div>
-        <div className="mt-12 sm:w-full sm:max-w-md lg:mt-0 lg:ml-8 lg:flex-1">
-          <form method="post" className="sm:flex sm:space-y-0 space-y-4">
-            <label htmlFor="name" className="sr-only">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              autoComplete="name"
-              className="w-full rounded-md sm:mr-3 border-white px-5 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700"
-              placeholder="Your name"
-            />
-            <label htmlFor="email-address" className="sr-only">
-              Email address
-            </label>
-           
-            <Button
-              type="submit"
-              className="mt-3 sm:mt-0 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-500 px-5 py-3 text-base font-medium text-white hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700 sm:ml-3 sm:w-auto sm:flex-shrink-0"
-            >
-              Subscribe
-            </Button>
-          </form>
-         
+          <div className="lg:mt-0 lg:w-1/2">
+            <form method="post" className="flex flex-row items-start  sm:items-center">
+              <input
+                id="name"
+                type="text"
+                autoComplete="name"
+                className="w-full sm:w-full flex-grow rounded-md mr-2 md:mr-0 border-white px-5 py-2 placeholder-[#6D6E76] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-[Orange] mb-4 sm:mb-0"
+                placeholder="Your name"
+              />
+              <Button
+                type="submit"
+                className="sm:ml-3 rounded-md px-5 py-5"
+              >
+                Subscribe
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ function BrandSection() {
     autoplaySpeed: 300,
     pauseOnHover: false,
     pauseOnFocus: false,
-    arrows: false, // Remove arrows
+    arrows: false, 
     responsive: [
       {
         breakpoint: 1024,

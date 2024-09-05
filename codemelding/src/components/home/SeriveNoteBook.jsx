@@ -14,16 +14,7 @@ import { RiStackLine } from "react-icons/ri";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaFontAwesomeFlag } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa6";
-import CaseStudyImage from '../../assets/CaseStudyImage.png'; // Ensure this path is correct
-
-
-
-
-
-
-
-
-
+import CaseStudyImage from '../../assets/CaseStudyImage.png'; 
 
 export const caseStudies = [
   {
@@ -93,8 +84,6 @@ export const caseStudies = [
   }
 ];
 
-
-
 export const tabs = [
     { name: 'Web App Development', icon: <GrCloudComputer /> },
     { name: 'Web Development', icon: <BsLaptop /> },
@@ -103,9 +92,9 @@ export const tabs = [
     { name: 'AI Development', icon: <GiMagicHat /> },
     { name: 'Blockchain Development', icon: <SiBlockchaindotcom /> },
     
-  ];
+];
 
-  export const tabContent = [
+export const tabContent = [
     {
       heading: 'Welcome to Home',
       paragraph: 'This is the home section. Here you can find various details about our services and offers.',
@@ -153,4 +142,32 @@ export const tabs = [
         { icon: <FaUser />, name: 'Profile', to: '#' },
       ],
     },
-  ];
+];
+
+export const FaqQuestions = [
+    {
+      ques: 'How does the billing work?',
+      ans: 'Springerdata offers a variety of billing options, including monthly and annual subscription plans, as well as pay-as-you-go pricing for certain services. Payment is typically made through a credit card or other secure online payment method.'
+    },
+    {
+      ques: 'Can I get a refund for my subscription?',
+      ans: 'We offer a 30-day money-back guarantee for most of its subscription plans. If you are not satisfied with your subscription within the first 30 days, you can request a full refund.'
+    },
+    {
+      ques: 'How do I cancel my subscription?',
+      ans: 'To cancel your subscription, you can log in to your account and navigate to the subscription management page. From there, you should be able to cancel your subscription and stop future billing.'
+    },
+    {
+      ques: 'Is there a free trial?',
+      ans: 'We offer a free trial of our software for a limited time. During the trial period, you will have access to a limited set of features and functionality, but you will not be charged.'
+    },
+    {
+      ques: 'How do I contact support?',
+      ans: 'If you need help with our platform or have any other questions, you can contact the company\'s support team by submitting a support request through the website or by emailing support@ourwebsite.com.'
+    },
+    {
+      ques: 'Do you offer any discounts or promotions?',
+      ans: 'We may offer discounts or promotions from time to time. To stay up-to-date on the latest deals and special offers, you can sign up for the company\'s newsletter or follow it on social media.'
+    }
+];
+  
