@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
 import MobileImage from '../../assets/MobileVpn.png';
 import Mobile1 from '../../assets/Growth.png';
 import Mobile2 from '../../assets/Download.png';
 import backgroundImage from '../../assets/Circle.png';
 import { motion } from "framer-motion";
+import CustomLink from '../buttons/CustomLink';
+import '../../App.css';
 
 function HeroSection() {
   return (
-    <div className="bg-gradient-to-b from-white via-white to-Orange md:mt-40">
+    <div className="bg-gradient-to-b from-white via-white to-Orange md:mt-24">
       <div 
         className="absolute inset-0 lg:col-span-7"
         style={{ 
@@ -30,13 +31,13 @@ function HeroSection() {
             Development, Web Design, and UI/UX Solutions
           </p>
           <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-            <Link
+            <CustomLink
               to="/"
               target="_blank"
-              className="bg-Orange inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-center text-White border border-Orange rounded-full sm:w-auto hover:bg-orange-400 focus:ring-4 focus:ring-orange-300"
+              className='px-5 py-3 rounded-full w-60'
             >
               Get started on your Dream
-            </Link>
+            </CustomLink>
           </div>
         </div>
 
@@ -51,7 +52,7 @@ function HeroSection() {
         ease: [0, 0.71, 0.2, 1.01]
       }}>
               <img 
-                className="object-cover w-full h-full rounded-lg transform transition-transform duration-500 ease-in-out rotate-6"
+                className="object-cover w-full h-full rounded-lg transform transition-transform duration-500 ease-in-out rotate-6 banner-img"
                 src={MobileImage}
                 alt="Hero"
               />

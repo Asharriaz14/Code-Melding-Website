@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FaAngleDown, FaBars, FaTimes } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { navbarLinks } from './NavLinks';
+import Button from '../buttons/button';
 import CompanyLogo from "../../assets/Logo.png";
 
 const Navbar = () => {
@@ -17,7 +18,9 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
     setDropdownOpen(null); 
   };
-
+  const handleClick = () => {
+    alert('Button clicked!');
+};
   return (
     <nav className="fixed top-0 left-0 w-full bg-white p-4 lg:py-5 lg:px-16 flex items-center justify-between  z-50">
       {/* Left Side: Logo */}
@@ -67,9 +70,10 @@ const Navbar = () => {
 
       {/* Right Side: Contact Button */}
       <div className="hidden md:flex">
-        <button className="relative h-[40px] w-32 flex items-center justify-center bg-orange-500 text-white rounded-xl shadow-2xl transition-all hover:shadow-orange-400 font-semibold overflow-hidden">
+      <Button onClick={handleClick} className="text-white rounded-xl font-semibold text-md px-3">Let’s Start</Button>
+        {/* <button className="relative h-[40px] w-32 flex items-center justify-center bg-orange-500  ">
           <span className="relative z-10">Let’s Start</span>
-        </button>
+        </button> */}
       </div>
 
       {/* Mobile Menu */}

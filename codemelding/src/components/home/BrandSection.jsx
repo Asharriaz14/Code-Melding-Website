@@ -26,6 +26,7 @@ function BrandSection() {
     autoplaySpeed: 300,
     pauseOnHover: false,
     pauseOnFocus: false,
+    arrows: false, // Remove arrows
     responsive: [
       {
         breakpoint: 1024,
@@ -59,20 +60,20 @@ function BrandSection() {
   ];
 
   return (
-    <div className="bg-white w-full px-4 pt-20 pb-16" id="faq">
-      <h2 className="text-4xl font-bold text-center pb-8">
+    <div className="bg-white max-w-screen-xl px-4 my-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-center pb-8">
         We are blessed to work with amazing <br /> brands worldwide
       </h2>
       
-      <div className="max-w-7xl mx-auto">
-        <Slider {...commonSettings} className='pl-12'>
+      <div className="max-w-full mx-auto">
+        <Slider {...commonSettings} className='md:pl-12'>
           {brands.map((brand, index) => (
             <div key={index}>
               <img alt="BrandLogo" className="h-20 mx-auto" src={brand} />
             </div>
           ))}
         </Slider>
-        <Slider {...rtlSettings} className="mt-10 pr-12">
+        <Slider {...rtlSettings} className="mt-10 md:pr-12">
           {brands.slice().reverse().map((brand, index) => (
             <div key={index}>
               <img alt="BrandLogo" className="h-20 mx-auto" src={brand} />

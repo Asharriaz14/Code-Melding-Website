@@ -10,3 +10,6 @@
 /* body {
   background-color: #faf9f6;
 } */
+html {
+  scroll-behavior: smooth;
+}
