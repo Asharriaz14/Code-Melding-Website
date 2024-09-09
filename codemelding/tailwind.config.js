@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
+    './node_modules/flowbite/**/*.js',
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -14,6 +14,6 @@ export default {
       'border': "#4D4D4D"
     }},
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 }
 
