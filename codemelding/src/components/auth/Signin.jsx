@@ -1,98 +1,148 @@
+import { useForm } from "react-hook-form";
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { signInStart, signInSuccess, signInFailure } from '../../redux/user/userSlice';
 
-function signin() {
-    return (
-      <div>
-          <div className="bg-gray-100 h-screen flex items-center justify-center">
-    <div className="h-screen bg-gradient-to-br from-blue-600 to-cyan-300 flex justify-center items-center w-full">
-      <form method="POST" action="#">
-        <div className="bg-white px-10 py-8 rounded-xl w-screen shadow-xl max-w-sm">
-          <div className="space-y-4">
-            <h1 className="text-center text-2xl font-semibold text-gray-600">Login</h1>
-            <hr />
-            <div className="flex items-center border-2 py-2 px-3 rounded-md mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                />
-              </svg>
-              <input
-                className="pl-2 outline-none border-none w-full"
-                type="email"
-                name="email"
-                placeholder="Email"
-                required
-              />
-            </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-md">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <input
-                className="pl-2 outline-none border-none w-full"
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-              />
-            </div>
-          </div>
-          <div className="flex justify-center items-center mt-4">
-            <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
-              <input type="checkbox" id="rememberMeCheckbox" name="rememberMe" className="mr-2" />
-              <span className="text-xs font-semibold">Remember me?</span>
-            </p>
-          </div>
-          <button
-            type="submit"
-            value="login"
-            id="login"
-            className="mt-6 w-full shadow-xl bg-gradient-to-tr from-blue-600 to-red-400 hover:to-red-700 text-indigo-100 py-2 rounded-md text-lg tracking-wide transition duration-1000"
+function Signing() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { loading, error: errorMessage } = useSelector(state => state.user);
+
+  const mutation = useMutation({
+    mutationFn: async (formData) => {
+      const response = await fetch('api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      return response.json();
+    },
+    onError: (error) => {
+      console.error('Error:', error.message);
+      dispatch(signInFailure(error.message));
+    },
+    onSuccess: (data) => {
+      dispatch(signInSuccess(data));
+      navigate('/');  // Navigate only on success
+    },
+  });
+
+  const onSubmit = (data) => {
+    dispatch(signInStart());
+    mutation.mutate(data);
+  };
+
+  return (
+    <div>
+      <div className="flex font-poppins items-center justify-center dark:bg-gray-900 min-w-screen min-h-screen">
+        <div className="grid gap-8">
+          <div
+            id="back-div"
+            className="bg-gradient-to-r from-blue-500 to-purple-500 rounded-[26px] m-4"
           >
-            Login
-          </button>
-          <hr />
-          <div className="flex justify-center items-center mt-4">
-            <p className="inline-flex items-center text-gray-700 font-medium text-xs text-center">
-              <span className="ml-2">
-                You don`t have an account?
-                <a href="#" className="text-xs ml-2 text-blue-500 font-semibold">
-                  Register now &rarr;
-                </a>
-              </span>
-            </p>
+            <div className="border-[20px] border-transparent rounded-[20px] dark:bg-gray-900 bg-white shadow-lg xl:p-10 2xl:p-10 lg:p-10 md:p-10 sm:p-2 m-2">
+              <h1 className="pt-8 pb-6 font-bold text-5xl dark:text-gray-400 text-center cursor-default">
+                Login
+              </h1>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="mb-2 dark:text-gray-400 text-lg">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
+                    type="email"
+                    placeholder="Email"
+                    {...register("email", { required: "Email is required" })}
+                  />
+                  {errors.email && (
+                    <span className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </span>
+                  )}
+                </div>
+                
+                <div>
+                  <label htmlFor="password" className="mb-2 dark:text-gray-400 text-lg">
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
+                    type="password"
+                    placeholder="Password"
+                    {...register("password", { required: "Password is required" })}
+                  />
+                  {errors.password && (
+                    <span className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </span>
+                  )}
+                </div>
+                
+                <button
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
+                  type="submit"
+                >
+                  {loading ? "Loading..." : "Login"}
+                </button>
+              </form>
+              
+              <div className="flex flex-col mt-4 items-center justify-center text-sm">
+                <h3>
+                  <span className="cursor-default dark:text-gray-300">
+                    Have an account?
+                  </span>
+                  <a
+                    className="group text-blue-400 transition-all duration-100 ease-in-out"
+                    href="#"
+                  >
+                    <span className="bg-left-bottom ml-1 bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                      Log In
+                    </span>
+                  </a>
+                </h3>
+              </div>
+              
+              <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
+                <p className="cursor-default">
+                  By signing in, you agree to our
+                  <a
+                    className="group text-blue-400 transition-all duration-100 ease-in-out"
+                    href="#"
+                  >
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                      Terms
+                    </span>
+                  </a>
+                  and
+                  <a
+                    className="group text-blue-400 transition-all duration-100 ease-in-out"
+                    href="#"
+                  >
+                    <span className="cursor-pointer bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                      Privacy Policy
+                    </span>
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="pt-6 text-base font-semibold leading-7">
-          <p className="font-sans text-red-500 text-md hover:text-red-800">
-            <a href="/" className="absolute">
-              &larr; Home
-            </a>
-          </p>
-        </div>
-      </form>
-    </div>
-  </div>
-  
       </div>
-    )
-  }
-  
-  export default signin
+    </div>
+  );
+}
+
+export default Signing;

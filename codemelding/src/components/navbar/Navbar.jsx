@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import { FaAngleDown, FaBars, FaTimes } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation , useNavigate } from 'react-router-dom';
 import { navbarLinks } from './NavLinks';
 import Button from '../buttons/button';
 import CompanyLogo from "../../assets/Logo.png";
-
+import { useSelector, useDispatch } from 'react-redux';
+import {singoutSuccess} from '../../redux/user/userSlice.js'
 const Navbar = () => {
+  const {currentUser} = useSelector(state=> state.user);
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleDropdownToggle = (index) => {
     setDropdownOpen(dropdownOpen === index ? null : index);
@@ -21,6 +26,25 @@ const Navbar = () => {
   const handleClick = () => {
     alert('Button clicked!');
 };
+const displayDropdown = () => {
+  setDropdown(!dropdown);
+}
+const handleSignout =async () => {
+  try {
+    const res =await fetch(`/api/user/signout`, {
+      method:'POST',        
+    });
+    const data = await res.json();
+    if(!res.ok) {
+      console.log(data.message)
+    }else {
+    dispatch(singoutSuccess(data));
+    navigate('/login');
+    }
+  }catch(error) {
+    console.log(error);
+  }
+}
   return (
     <nav className="fixed top-0 left-0 w-full bg-white p-4 lg:py-5 lg:px-16 flex items-center justify-between  z-50">
       {/* Left Side: Logo */}
@@ -72,7 +96,41 @@ const Navbar = () => {
 
       {/* Right Side: Contact Button */}
       <div className="hidden md:flex">
-      <Button onClick={handleClick} className="text-white rounded-xl font-semibold text-md px-3">Let’s Start</Button>
+
+{/* handling user condition btn  */}
+
+{currentUser ? (
+  <nav className="flex items-center justify-end p-1 ">
+  <div className="relative group">
+   <button onClick={displayDropdown}>
+
+    <img 
+      src="https://via.placeholder.com/40" 
+      alt="User Avatar" 
+      className="w-7 h-7 rounded-full cursor-pointer"
+      />
+      </button>
+    
+    <div className={`${dropdown ? 'block' : 'hidden'}   absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg`}>
+      <ul>
+        <li>
+          <Link to='/dashboard' className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</Link>
+        </li>
+        
+        <li>
+          <button onClick={handleSignout} className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+): (
+  <Button onClick={handleClick} className="text-white rounded-xl font-semibold text-md px-3">Let’s Start</Button>
+
+)}
+      
+      {/* Codemelding Btn  */}
+      {/* <Button onClick={handleClick} className="text-white rounded-xl font-semibold text-md px-3">Let’s Start</Button> */}
         {/* <button className="relative h-[40px] w-32 flex items-center justify-center bg-orange-500  ">
           <span className="relative z-10">Let’s Start</span>
         </button> */}
