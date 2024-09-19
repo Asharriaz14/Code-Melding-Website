@@ -13,3 +13,10 @@
 html {
   scroll-behavior: smooth;
 }
+.post-content p {
+  margin-bottom: 0.5rem;
+}
+.post-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}

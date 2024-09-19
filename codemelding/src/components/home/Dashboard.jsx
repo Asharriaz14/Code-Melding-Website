@@ -21,8 +21,8 @@ function Dashboard() {
 
   const [formData , setFormData] = useState({});
 
-  console.log('currentUser:', currentUser);
-  console.log('currentUser.id:', currentUser._id);
+  // console.log('currentUser:', currentUser);
+  // console.log('currentUser.id:', currentUser._id);
   
   const handleImageChange= (e)=> {
     const file = e.target.files[0];
@@ -90,7 +90,7 @@ function Dashboard() {
           dispatch(deleteUserFailure(data.message));
         }else {
           dispatch(deleteUserSuccess(data));
-        navigate('/signin');
+        navigate('/register');
 
         }
       } catch(error) {

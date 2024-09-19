@@ -66,7 +66,7 @@ export const signin = async(req, res, next) => {
 
         // Generating a JWT token for the user using their ID and a secret from the environment variables
         const token = jwt.sign(
-            { id: validUser._id }, process.env.JWT_SECRET
+            { id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET
         );
 
         // Removing the password from the user object before sending the response

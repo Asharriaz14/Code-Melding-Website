@@ -10,7 +10,9 @@ target: 'http://localhost:3000/',
 secure: false,
       }
     },
-    host: '192.168.18.10',
-    port: 5173,},
+    // host: '192.168.18.10',
+    // port: 5173,
+  
+  },
   plugins: [react()],
 })

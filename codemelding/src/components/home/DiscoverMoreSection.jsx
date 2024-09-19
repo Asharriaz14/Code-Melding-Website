@@ -1,22 +1,23 @@
-import Stones from '../../assets/Stones.png';
-import CustomLink from '../buttons/CustomLink';
-import '../../App.css'
+import Stones from "../../assets/Stones.png";
+import CustomLink from "../buttons/CustomLink";
+import "../../App.css";
 import { motion } from "framer-motion";
-
+import LazyLoad from "react-lazyload";
 
 function DiscoverMore() {
   return (
     <div className="my-16">
-      <div className="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center lg:items-start">
-      <motion.div className="relative box order-2 lg:order-1 lg:w-1/2 mb-8 lg:mb-0 flex justify-center lg:justify-start" initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.8,
-        delay: 0.5,
-        ease: [0, 0.71, 0.2, 1.01]
-      }}>
-
-       
+      <LazyLoad className="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center lg:items-start">
+        <motion.div
+          className="relative box order-2 lg:order-1 lg:w-1/2 mb-8 lg:mb-0 flex justify-center lg:justify-start"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.5,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
+        >
           <img
             src={Stones}
             alt="Discover Image"
@@ -29,7 +30,11 @@ function DiscoverMore() {
             Meet the Minds Behind the Code
           </h1>
           <p className="text-lg mt-4 lg:mt-6 text-justify md:pr-8">
-            At Code Melding, we’re a passionate team of developers, designers, and AI specialists who are revolutionizing the digital landscape. We craft exceptional web, mobile, and web app experiences infused with cutting-edge UI/UX design, intelligent AI, and pioneering Web3 development.
+            At Code Melding, we’re a passionate team of developers, designers,
+            and AI specialists who are revolutionizing the digital landscape. We
+            craft exceptional web, mobile, and web app experiences infused with
+            cutting-edge UI/UX design, intelligent AI, and pioneering Web3
+            development.
           </p>
           <div className="mt-6 lg:mt-8">
             <CustomLink
@@ -40,7 +45,7 @@ function DiscoverMore() {
             </CustomLink>
           </div>
         </div>
-      </div>
+      </LazyLoad>
     </div>
   );
 }

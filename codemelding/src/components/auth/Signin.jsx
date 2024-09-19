@@ -33,7 +33,10 @@ function Signing() {
     },
     onSuccess: (data) => {
       dispatch(signInSuccess(data));
-      navigate('/');  // Navigate only on success
+      // console.log('signin==========',data);
+      // alert('ok');
+      {data.isAdmin === false ? navigate('/'): navigate('/admin')}
+      // navigate('/');  // Navigate only on success
     },
   });
 
