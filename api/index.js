@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js'
 import cookieParser from 'cookie-parser';
 // import postRoute from './routes/post.route.js'
 import BlogRoute from './routes/blog.route.js'
+import CategoryRoute from './routes/categories.route.js'
 
 dotenv.config();
 mongoose.connect(process.env.MONGO).then(()=> {
@@ -30,6 +31,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth' , authRoutes);
 // app.use('/api/post', postRoute);
 app.use('/api/post',  BlogRoute );
+app.use('/api/category', CategoryRoute);
 
 app.use ((err, req, res, next) => {
 const statusCode = err.statusCode || 500;

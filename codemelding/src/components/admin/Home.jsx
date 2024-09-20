@@ -1,10 +1,10 @@
-import Layout from '../admin/layout/Layout'
-import Panel from './Panel';
+import Layout from "../admin/layout/Layout";
+import Dashboard from "./dashboard/Index";
 
 function Home() {
   return (
     <Layout>
-<Panel />
+      <Dashboard />
     </Layout>
   );
 }

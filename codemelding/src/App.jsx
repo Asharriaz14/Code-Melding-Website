@@ -13,6 +13,8 @@ import DispalyAllBlogs from "./components/admin/allBlogs/Index";
 import AdminDashboard from "./components/admin/dashboard/Index";
 import UpdatePost from "./components/admin/updateBlogs/Index";
 import DisplayBlog from "./components/blog/DisplayAll";
+import Categories from "./components/admin/Categories/Index";
+import UpdateCategory from "./components/admin/updateCategories/Index";
 const queryClient = new QueryClient();
 
 export default function App() {
@@ -25,17 +27,21 @@ export default function App() {
           <Route path="/blog/:postBlog" element={<Blog />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/ss" element={<Adminside />} />
 
           <Route element={<UserRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<Adminside />} />
+            <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/createpost" element={<PostPage />} />
             <Route path="/allblogs" element={<DispalyAllBlogs />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/update-post/:postId" element={<UpdatePost />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route
+              path="/update-category/:categoryId"
+              element={<UpdateCategory />}
+            />
           </Route>
           <Route path="/blog" element={<DisplayBlog />} />
           {/* <Route path="/admin" element={<AdminDashboard />} />   */}

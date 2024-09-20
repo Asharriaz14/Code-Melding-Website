@@ -1,14 +1,15 @@
-import { Alert } from 'flowbite-react';
-import { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from "flowbite-react";
+import { useCallback, useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
-    title: '',
-    category: 'uncategorized',
-    content: '',
+    title: "",
+    category: "uncategorized",
+    content: "",
     blogImage: null,
     sections: [],
   });
@@ -48,7 +49,7 @@ function CreatePost() {
   const addSection = () => {
     setFormData((prevData) => ({
       ...prevData,
-      sections: [...prevData.sections, { image: null, text: '' }],
+      sections: [...prevData.sections, { image: null, text: "" }],
     }));
   };
 
@@ -57,11 +58,11 @@ function CreatePost() {
     setIsSubmitting(true);
 
     const fd = new FormData();
-    fd.append('title', formData.title);
-    fd.append('category', formData.category);
-    fd.append('content', formData.content);
+    fd.append("title", formData.title);
+    fd.append("category", formData.category);
+    fd.append("content", formData.content);
     if (formData.blogImage) {
-      fd.append('blogImage', formData.blogImage);
+      fd.append("blogImage", formData.blogImage);
     }
 
     formData.sections.forEach((section, index) => {
@@ -74,35 +75,71 @@ function CreatePost() {
     });
 
     try {
-      const res = await fetch('/api/post/create', {
-        method: 'POST',
+      const res = await fetch("/api/post/create", {
+        method: "POST",
         body: fd,
       });
       const data = await res.json();
       if (!res.ok) {
-        setPublishError(data.message || 'An error occurred');
+        setPublishError(data.message || "An error occurred");
       } else {
         setPublishError(null);
         // navigate(`/post/${data.slug}`);
         setFormData({
-          title: '',
-          category: 'uncategorized',
-          content: '',
+          title: "",
+          category: "uncategorized",
+          content: "",
           blogImage: null,
           sections: [],
         });
         setPreviewImage(null);
       }
     } catch (error) {
-      setPublishError('Something went wrong');
+      setPublishError("Something went wrong");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const fetchCategories = useCallback(async () => {
+    try {
+      const res = await fetch("/api/category/getcategory");
+
+      if (!res.ok) {
+        // If the response status is not ok, throw an error
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to fetch categories");
+      }
+
+      const data = await res.json();
+      console.log(data);
+      // if (Array.isArray(data)) {
+      //   console.log("Received an array.");
+      // } else if (typeof data === "object") {
+      //   console.log("Received an object.");
+      // } else {
+      //   console.log("Received data is neither an array nor an object.");
+      // }
+      setCategories(data); // Update state with fetched data
+      setPublishError(null); // Clear any previous errors
+    } catch (error) {
+      setPublishError(
+        error.message || "An error occurred while fetching categories"
+      );
+    }
+  }, []); // Empty dependency array ensures this only runs once on mount
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]); // Add fetchCategories as a dependency
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form onSubmit={handleSubmit} encType="multipart/form-data" className="w-full max-w-2xl bg-white rounded-lg shadow-lg border px-8 py-6">
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="w-full max-w-2xl bg-white rounded-lg shadow-lg border px-8 py-6"
+      >
         <div className="space-y-6">
           <p className="text-2xl font-bold leading-tight tracking-tight text-gray-900">
             Create a Post
@@ -135,9 +172,12 @@ function CreatePost() {
               onChange={handleChange}
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-3"
             >
-              <option value="uncategorized">Select a Category</option>
-              <option value="javascript">Javascript</option>
-              <option value="react js">React JS</option>
+              <option> Select Category</option>
+              {categories.map((cat, index) => (
+                <option key={index} value={cat.name}>
+                  {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -206,15 +246,21 @@ function CreatePost() {
 
           {/* Submit Button */}
           <button
-            className={`w-full ${isSubmitting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-700'} focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-white focus:ring-blue-800`}
+            className={`w-full ${
+              isSubmitting ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-700"
+            } focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-3 text-white focus:ring-blue-800`}
             type="submit"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Submitting...' : 'Create Post'}
+            {isSubmitting ? "Submitting..." : "Create Post"}
           </button>
 
           {/* Display error if publishError exists */}
-          {publishError && <Alert color="failure" className="mt-4">{publishError}</Alert>}
+          {publishError && (
+            <Alert color="failure" className="mt-4">
+              {publishError}
+            </Alert>
+          )}
         </div>
       </form>
     </div>

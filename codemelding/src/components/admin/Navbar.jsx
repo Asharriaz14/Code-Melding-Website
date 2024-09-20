@@ -1,95 +1,69 @@
-import { useState } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { useState } from "react";
+import { FaBars, FaSearch } from "react-icons/fa"; // Importing FaSearch for the search icon
 
 const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [navbarOpen, setNavbarOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
 
   const toggleNavbar = () => {
     setNavbarOpen(!navbarOpen);
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-white text-lg font-bold">
-          <a href="/">Logo</a>
-        </div>
-
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex space-x-6">
-          <a href="#home" className="text-white hover:text-gray-400">Home</a>
-          <a href="#about" className="text-white hover:text-gray-400">About</a>
-
-          {/* Dropdown */}
-          <div className="relative">
-            <button
-              onClick={toggleDropdown}
-              className="text-white hover:text-gray-400 focus:outline-none"
-            >
-              Services
-            </button>
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                <a href="#web-design" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  Web Design
-                </a>
-                <a href="#seo" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  SEO
-                </a>
-                <a href="#marketing" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  Marketing
-                </a>
-              </div>
-            )}
-          </div>
-
-          <a href="#contact" className="text-white hover:text-gray-400">Contact</a>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <div className="md:hidden flex items-center">
-          <button className="text-white focus:outline-none" onClick={toggleNavbar}>
-            <FaBars className="w-6 h-6" />
-          </button>
-        </div>
+    <nav className="flex p-2 justify-between items-center border-b border-gray-300 flex-wrap">
+      {/* Logo Section */}
+      <div className="flex items-center">
+        <img
+          src="https://tailwindflex.com/public/images/logo.svg"
+          className="w-10 h-10"
+          alt="TailwildFlex logo"
+        />
+        <h2 className="font-bold text-2xl text-purple-600 ml-2">
+          TailwildFlex
+        </h2>
       </div>
 
-      {/* Mobile Menu */}
-      {navbarOpen && (
-        <div className="md:hidden mt-4">
-          <a href="#home" className="block text-white py-2 hover:text-gray-400">Home</a>
-          <a href="#about" className="block text-white py-2 hover:text-gray-400">About</a>
+      {/* Hamburger Menu for Mobile */}
+      <div className="md:hidden">
+        <button onClick={toggleNavbar}>
+          <FaBars className="text-2xl text-gray-600" />
+        </button>
+      </div>
 
-          {/* Dropdown in Mobile */}
-          <div className="relative">
-            <button
-              onClick={toggleDropdown}
-              className="block w-full text-left text-white py-2 hover:text-gray-400 focus:outline-none"
-            >
-              Services
-            </button>
-            {dropdownOpen && (
-              <div className="mt-2 py-2 w-full bg-white rounded-lg shadow-xl">
-                <a href="#web-design" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  Web Design
-                </a>
-                <a href="#seo" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  SEO
-                </a>
-                <a href="#marketing" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">
-                  Marketing
-                </a>
-              </div>
-            )}
+      {/* Search bar and Buttons (hidden on mobile) */}
+      <div className="hidden md:flex items-center gap-4">
+        <div className="relative flex items-center">
+          <input
+            type="text"
+            placeholder="Search"
+            className="border border-gray-200 rounded-md py-1 px-2"
+          />
+          <FaSearch className="absolute right-2 h-6 w-6 text-gray-400 hover:text-gray-500" />
+        </div>
+
+        <button className="border px-2 py-1 rounded-md">Center</button>
+
+        <button className="border px-2 py-1 rounded-md bg-purple-600 text-white hover:bg-purple-700">
+          Save
+        </button>
+      </div>
+
+      {/* Mobile Menu (toggles with FaBars) */}
+      {navbarOpen && (
+        <div className="w-full mt-4 flex flex-col items-center gap-2 md:hidden">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              placeholder="Search"
+              className="border border-gray-200 rounded-md py-1 px-2 w-full"
+            />
+            <FaSearch className="absolute right-2 h-6 w-6 text-gray-400 hover:text-gray-500" />
           </div>
 
-          <a href="#contact" className="block text-white py-2 hover:text-gray-400">Contact</a>
+          <button className="border px-2 py-1 rounded-md w-full">Center</button>
+
+          <button className="border px-2 py-1 rounded-md bg-purple-600 text-white hover:bg-purple-700 w-full">
+            Save
+          </button>
         </div>
       )}
     </nav>

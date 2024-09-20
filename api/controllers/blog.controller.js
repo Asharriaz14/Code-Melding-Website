@@ -37,6 +37,10 @@ const upload = multer({
   { name: 'blogImage', maxCount: 1 },
   { name: 'sections[0][image]', maxCount: 1 },
   { name: 'sections[1][image]', maxCount: 1 },
+  { name: 'sections[2][image]', maxCount: 1 },
+  { name: 'sections[3][image]', maxCount: 1 },
+  { name: 'sections[4][image]', maxCount: 1 },
+  { name: 'sections[5][image]', maxCount: 1 },
   // Add more fields if necessary for additional sections
 ]);
 
