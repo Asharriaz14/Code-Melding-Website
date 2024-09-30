@@ -1,5 +1,5 @@
-import HaroonImage from "../../assets/HaroonImage.png";
-import backgroundImage from "../../assets/CtaBackground.png";
+import HaroonImage from "../../assets/HaroonImage.webp";
+import backgroundImage from "../../assets/CtaBackground.webp";
 import { GoArrowUpRight } from "react-icons/go";
 import LazyLoad from "react-lazyload";
 

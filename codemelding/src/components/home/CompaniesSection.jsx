@@ -1,7 +1,7 @@
-import UpworkImage from "../../assets/Upwork.png";
-import FiverImage from "../../assets/Fiverr.png";
-import TrustpilotImage from "../../assets/TrustPilot.png";
-import ClutchImage from "../../assets/Clutch.png";
+import UpworkImage from "../../assets/Upwork.webp";
+import FiverImage from "../../assets/Fiverr.webp";
+import TrustpilotImage from "../../assets/TrustPilot.webp";
+import ClutchImage from "../../assets/Clutch.webp";
 import LazyLoad from "react-lazyload";
 const Companies = () => {
   const images = [UpworkImage, ClutchImage, TrustpilotImage, FiverImage];

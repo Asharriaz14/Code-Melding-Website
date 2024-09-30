@@ -1,21 +1,29 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, signInSuccess, signInFailure } from '../../redux/user/userSlice';
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../../redux/user/userSlice";
 
 function Signing() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const { loading, error: errorMessage } = useSelector(state => state.user);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
-      const response = await fetch('api/auth/signin', {
-        method: 'POST',
+      const response = await fetch("api/auth/signin", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -28,14 +36,16 @@ function Signing() {
       return response.json();
     },
     onError: (error) => {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
       dispatch(signInFailure(error.message));
     },
     onSuccess: (data) => {
       dispatch(signInSuccess(data));
       // console.log('signin==========',data);
       // alert('ok');
-      {data.isAdmin === false ? navigate('/'): navigate('/admin')}
+      {
+        data.isAdmin === false ? navigate("/") : navigate("/admin");
+      }
       // navigate('/');  // Navigate only on success
     },
   });
@@ -59,7 +69,10 @@ function Signing() {
               </h1>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="mb-2 dark:text-gray-400 text-lg">
+                  <label
+                    htmlFor="email"
+                    className="mb-2 dark:text-gray-400 text-lg"
+                  >
                     Email
                   </label>
                   <input
@@ -75,9 +88,12 @@ function Signing() {
                     </span>
                   )}
                 </div>
-                
+
                 <div>
-                  <label htmlFor="password" className="mb-2 dark:text-gray-400 text-lg">
+                  <label
+                    htmlFor="password"
+                    className="mb-2 dark:text-gray-400 text-lg"
+                  >
                     Password
                   </label>
                   <input
@@ -85,7 +101,9 @@ function Signing() {
                     className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
                     type="password"
                     placeholder="Password"
-                    {...register("password", { required: "Password is required" })}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                   />
                   {errors.password && (
                     <span className="text-red-500 text-sm">
@@ -93,7 +111,7 @@ function Signing() {
                     </span>
                   )}
                 </div>
-                
+
                 <button
                   className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out"
                   type="submit"
@@ -101,7 +119,7 @@ function Signing() {
                   {loading ? "Loading..." : "Login"}
                 </button>
               </form>
-              
+
               <div className="flex flex-col mt-4 items-center justify-center text-sm">
                 <h3>
                   <span className="cursor-default dark:text-gray-300">
@@ -117,7 +135,7 @@ function Signing() {
                   </a>
                 </h3>
               </div>
-              
+
               <div className="text-gray-500 flex text-center flex-col mt-4 items-center text-sm">
                 <p className="cursor-default">
                   By signing in, you agree to our

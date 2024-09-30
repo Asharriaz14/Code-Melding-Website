@@ -54,7 +54,7 @@ function UpdatePost() {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFormData((prevData) => ({ ...prevData, blogImage: file }));
-    setPreviewImage(URL.createObjectURL(file)); // Create and set image preview URL
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleQuillChange = (value) => {
@@ -66,7 +66,6 @@ function UpdatePost() {
 
     setIsSubmitting(true);
 
-    // Log formData to check if _id is present
     console.log("Submitting formData:", formData);
 
     const fd = new FormData();
@@ -92,7 +91,7 @@ function UpdatePost() {
         setPublishError(data.message || "An error occurred");
       } else {
         setPublishError(null);
-        // navigate(`/post/${data.slug}`);
+        // navigate(`/blog/${data.slug}`);
       }
     } catch (error) {
       setPublishError("Something went wrong");

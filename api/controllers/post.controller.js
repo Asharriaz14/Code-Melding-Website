@@ -123,8 +123,11 @@ export const getposts = async (req, res, next) => {
 
 export const deletepost = async (req, res, next) => {
   try {
+      console.log("Request Params:", req.params); // Log request params
+      console.log("User:", req.user); // Log user for debugging
+
       // Check if the user is an admin or the owner of the post
-      if (!req.user.isAdmin && req.user.id !== req.params.userId) {
+      if (!req.user || (!req.user.isAdmin && req.user.id !== req.params.userId)) {
           return next(errorHandler(403, 'You are not allowed to delete this post'));
       }
 
@@ -141,6 +144,7 @@ export const deletepost = async (req, res, next) => {
       res.status(200).json('The post has been deleted');
   } catch (error) {
       // Handle any errors that occur during the process
+      console.error("Error in deleting post:", error); // Log error
       next(error);
   }
 };

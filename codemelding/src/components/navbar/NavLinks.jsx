@@ -1,15 +1,118 @@
 export const navbarLinks = [
-    { name: 'Home', to: '/' },
-    {
-      name: 'Services',
-      to: '#', // Placeholder for dropdown
-      dropdown: [
-        { name: 'Service 1', to: '/service1' },
-        { name: 'Service 2', to: '/service2' },
-        { name: 'Service 3', to: '/service3' }
-      ]
-    },
-    { name: 'Solution', to: '/about' },
-    { name: 'Technolgies', to: '/about' },
-    { name: 'Company', to: '/contact' }
-  ];
+  { name: "Home", to: "/" },
+  {
+    name: "Services",
+    to: "#",
+  },
+  { name: "Solution", to: "/register" },
+  { name: "Technolgies", to: "/login" },
+  { name: "Company", to: "/contact" },
+];
+export const webDev = [
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+];
+export const mobDev = [
+  {
+    name: "Mobile App Development",
+    to: "#",
+  },
+  {
+    name: "Fluter App Development",
+    to: "#",
+  },
+  {
+    name: "Progressive Web App",
+    to: "#",
+  },
+  {
+    name: "App Maintenance & Support",
+    to: "#",
+  },
+  {
+    name: "Android App Development",
+    to: "/android",
+  },
+  {
+    name: "React Native Development",
+    to: "#",
+  },
+  {
+    name: "Hybrid App Development",
+    to: "#",
+  },
+  {
+    name: "MVP Development",
+    to: "#",
+  },
+  {
+    name: "iPhone App Development",
+    to: "#",
+  },
+  {
+    name: "Website App Development",
+    to: "#",
+  },
+  {
+    name: "UI/UX Design",
+    to: "#",
+  },
+  {
+    name: "Ecommerce App Development",
+    to: "#",
+  },
+];
+
+export const tabs = [
+  { name: "Website Development", data: webDev },
+  { name: "Mobile App Development", data: mobDev },
+  { name: "Software Development", data: mobDev },
+  { name: "Blockchain Development", data: mobDev },
+  { name: "Emerging Development", data: mobDev },
+];

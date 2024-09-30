@@ -134,3 +134,79 @@ export const getposts = async (req, res, next) => {
       next(error)
     }
   }
+
+  export const deletepost = async (req, res, next) => {
+    try {
+        console.log("Request Params:", req.params); // Log request params
+        console.log("User:", req.user); // Log user for debugging
+  
+        // Check if the user is an admin or the owner of the post
+        if (!req.user || (!req.user.isAdmin && req.user.id !== req.params.userId)) {
+            return next(errorHandler(403, 'You are not allowed to delete this post'));
+        }
+  
+        // Attempt to find and delete the post by its ID
+        const post = await Post.findById(req.params.postId);
+        
+        // If post doesn't exist, return a 404 error
+        if (!post) {
+            return next(errorHandler(404, 'Post not found'));
+        }
+  
+        // If post is found, delete it
+        await Post.findByIdAndDelete(req.params.postId);
+        res.status(200).json('The post has been deleted');
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error("Error in deleting post:", error); // Log error
+        next(error);
+    }
+  };
+
+  export const updatepost = async (req, res, next) => {
+    // Use multer to handle file uploads
+    upload(req, res, async function (err) {
+        if (err) {
+            return next(errorHandler(400, err.message));
+        }
+
+        try {
+            // Check if the user has permission to update the post
+            if (!req.user.isAdmin && req.user.id !== req.params.userId) {
+                return next(errorHandler(403, 'You are not allowed to update this post'));
+            }
+
+            // Find the post by ID
+            const post = await Post.findById(req.params.postId);
+            if (!post) {
+                return next(errorHandler(404, 'Post not found'));
+            }
+
+            // Update post fields
+            post.title = req.body.title || post.title; // Keep existing title if not provided
+            post.content = req.body.content || post.content; // Keep existing content if not provided
+            post.category = req.body.category || post.category; // Keep existing category if not provided
+
+            // Handle image update if a new image is uploaded
+            if (req.files['blogImage']) {
+                post.image = req.files['blogImage'][0].filename; // Update image with new upload
+            }
+
+            // Safely handle sections field
+            // const sections = req.body.sections;
+            // const parsedSections = typeof sections === 'string' ? JSON.parse(sections) : sections;
+
+            // // Update sections
+            // post.sections = parsedSections.map((section, index) => ({
+            //     image: req.files[`sections[${index}][image]`] ? req.files[`sections[${index}][image]`][0].filename : post.sections[index]?.image,
+            //     text: section.text,
+            // }));
+
+            // Save the updated post
+            const updatedPost = await post.save();
+            res.status(200).json(updatedPost);
+        } catch (error) {
+            next(error);
+        }
+    });
+};

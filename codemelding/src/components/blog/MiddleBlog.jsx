@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link as ScrollLink, Element as ScrollElement } from 'react-scroll';
+import { useEffect, useState } from "react";
+import { Link as ScrollLink, Element as ScrollElement } from "react-scroll";
 
 const PostDetail = ({ post }) => {
   const { content, sections } = post || {};
@@ -9,8 +9,10 @@ const PostDetail = ({ post }) => {
     if (content) {
       // Parse the content and extract headings
       const parser = new DOMParser();
-      const doc = parser.parseFromString(content, 'text/html');
-      const extractedHeadings = Array.from(doc.querySelectorAll('h1, h2, h3')).map((heading, index) => ({
+      const doc = parser.parseFromString(content, "text/html");
+      const extractedHeadings = Array.from(
+        doc.querySelectorAll("h1, h2, h3")
+      ).map((heading, index) => ({
         id: `heading-${index}`, // Generate an ID for each heading
         text: heading.innerText,
         tagName: heading.tagName,
@@ -21,12 +23,15 @@ const PostDetail = ({ post }) => {
 
   // Function to replace headings in content with scrollable elements
   const getModifiedContent = () => {
-    if (!content) return '';
+    if (!content) return "";
     let modifiedContent = content;
 
     headings.forEach((heading) => {
-      const regex = new RegExp(`(${heading.text})`, 'g');
-      modifiedContent = modifiedContent.replace(regex, `<ScrollElement name="${heading.id}" id="${heading.id}">$1</ScrollElement>`);
+      const regex = new RegExp(`(${heading.text})`, "g");
+      modifiedContent = modifiedContent.replace(
+        regex,
+        `<ScrollElement name="${heading.id}" id="${heading.id}">$1</ScrollElement>`
+      );
     });
 
     return modifiedContent;
@@ -41,24 +46,24 @@ const PostDetail = ({ post }) => {
             <div className="my-4">
               {/* Render HTML content with scrollable elements */}
               <div
-                className="text-gray-700 post-content mb-4"
+                className="text-gray-700 post-content "
                 dangerouslySetInnerHTML={{ __html: getModifiedContent() }}
               ></div>
               {sections && sections.length > 0 && (
                 <div className="sections">
                   {sections.map((section) => (
-                    <div key={section._id} className="section mb-4">
+                    <div key={section._id} className=" ">
                       {section.image && (
                         <img
                           src={`http://localhost:3000/uploads/${section.image}`}
                           alt={section.text}
-                          className="w-full h-auto mb-2"
+                          className="w-full h-auto  mb-4"
                         />
                       )}
-                      <p 
-                        className="content mb-4"
+                      <div
+                        className="content mb-4 post-content"
                         dangerouslySetInnerHTML={{ __html: section.text }}
-                      ></p>
+                      ></div>
                     </div>
                   ))}
                 </div>
@@ -72,7 +77,12 @@ const PostDetail = ({ post }) => {
               <h3 className="text-2xl font-bold mb-4 px-6">Contents</h3>
               <ul className="list-none px-4">
                 {headings.map((heading, index) => (
-                  <li key={index} className={`text-sm p-2 my-1 font-medium ${heading.tagName === 'H2' ? 'font-bold' : ''}`}>
+                  <li
+                    key={index}
+                    className={`text-sm p-2 my-1 font-medium ${
+                      heading.tagName === "H2" ? "font-bold" : ""
+                    }`}
+                  >
                     <ScrollLink
                       to={heading.id}
                       smooth={true}

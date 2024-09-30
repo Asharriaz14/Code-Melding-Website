@@ -1,19 +1,19 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import BrandOne from "../../assets/Brand-One.png";
-import BrandTwo from "../../assets/Brand-Two.png";
-import BrandThree from "../../assets/Brand-Three.png";
-import BrandFour from "../../assets/Brand-Four.png";
-import BrandFive from "../../assets/Brand-Five.png";
-import BrandSix from "../../assets/Brand-Six.png";
-import BrandSeven from "../../assets/Brand-Seven.png";
-import BrandEight from "../../assets/Brand-Eight.png";
-import BrandNine from "../../assets/Brand-Nine.png";
-import BrandTen from "../../assets/Brand-Ten.png";
-import BrandEleven from "../../assets/Brand-Eleven.png";
-import BrandTwelve from "../../assets/Brand-Twelve.png";
-import BrandThirteen from "../../assets/Brand-Thirteen.png";
+import BrandOne from "../../assets/Brand-One.webp";
+import BrandTwo from "../../assets/Brand-Two.webp";
+import BrandThree from "../../assets/Brand-Three.webp";
+import BrandFour from "../../assets/Brand-Four.webp";
+import BrandFive from "../../assets/Brand-Five.webp";
+import BrandSix from "../../assets/Brand-Six.webp";
+import BrandSeven from "../../assets/Brand-Seven.webp";
+import BrandEight from "../../assets/Brand-Eight.webp";
+import BrandNine from "../../assets/Brand-Nine.webp";
+import BrandTen from "../../assets/Brand-Ten.webp";
+import BrandEleven from "../../assets/Brand-Eleven.webp";
+import BrandTwelve from "../../assets/Brand-Twelve.webp";
+import BrandThirteen from "../../assets/Brand-Thirteen.webp";
 import LazyLoad from "react-lazyload";
 
 function BrandSection() {

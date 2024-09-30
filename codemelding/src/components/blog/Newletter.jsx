@@ -12,7 +12,11 @@ function Newsletter() {
           </div>
 
           <div className="lg:mt-0 lg:w-1/2">
-            <form method="post" className="flex flex-row items-start  sm:items-center">
+            {/* form  */}
+            <div
+              // method="post"
+              className="flex flex-row items-start  sm:items-center"
+            >
               <input
                 id="name"
                 type="text"
@@ -23,10 +27,11 @@ function Newsletter() {
               <Button
                 type="submit"
                 className="sm:ml-3 rounded-md px-5 py-5"
+                onClick={() => console.log("Btn is Clicked")}
               >
                 Subscribe
               </Button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

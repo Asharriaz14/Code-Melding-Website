@@ -1,5 +1,5 @@
 import LazyLoad from "react-lazyload";
-import CalculatorImage from "../../assets/CalculateImage.png";
+import CalculatorImage from "../../assets/CalculateImage.webp";
 import CustomLink from "../buttons/CustomLink";
 function Calculator() {
   return (

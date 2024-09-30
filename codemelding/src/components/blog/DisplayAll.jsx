@@ -1,35 +1,23 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import CustomLink from "../buttons/CustomLink";
 import { MdArrowOutward, MdSearch } from "react-icons/md";
 import LazyLoad from "react-lazyload";
 import Layout from "../../layout/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogs } from "../../redux/user/blogSlice";
 
 const BlogSection = () => {
-  const [blogData, setBlogData] = useState([]);
+  const dispatch = useDispatch();
+  const { blogs, error, loading } = useSelector((state) => state.blog);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(""); // State for selected category
-
-  // Fetch blog posts from API
-  const fetchPosts = useCallback(async () => {
-    try {
-      const res = await fetch("/api/post/getposts");
-      if (!res.ok) throw new Error("Failed to fetch posts");
-
-      const data = await res.json();
-      setBlogData(data.posts);
-    } catch (error) {
-      console.error("Error Fetching Posts:", error);
-    }
-  }, []);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    fetchPosts();
-    window.scrollTo(0, 0);
-  }, [fetchPosts]);
+    dispatch(fetchBlogs());
+  }, [dispatch]);
 
-  // Filter the blog data based on search input and selected category
   const filteredData = useMemo(() => {
-    return blogData.filter((post) => {
+    return blogs.filter((post) => {
       const term = searchTerm.toLowerCase();
       const titleMatch = post.title?.toLowerCase().includes(term);
       const categoryMatch = post.category?.toLowerCase().includes(term);
@@ -41,15 +29,18 @@ const BlogSection = () => {
 
       return titleMatch || categoryMatch;
     });
-  }, [blogData, searchTerm, selectedCategory]);
+  }, [blogs, searchTerm, selectedCategory]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category === selectedCategory ? "" : category);
   };
 
   const uniqueCategories = useMemo(() => {
-    return [...new Set(blogData.map((post) => post.category))];
-  }, [blogData]);
+    return [...new Set(blogs.map((post) => post.category))];
+  }, [blogs]);
+
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
     <Layout>

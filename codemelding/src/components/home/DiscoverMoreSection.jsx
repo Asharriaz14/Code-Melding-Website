@@ -1,4 +1,4 @@
-import Stones from "../../assets/Stones.png";
+import Stones from "../../assets/Stones.webp";
 import CustomLink from "../buttons/CustomLink";
 import "../../App.css";
 import { motion } from "framer-motion";

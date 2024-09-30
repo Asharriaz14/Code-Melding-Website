@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa";
-import AppIcon from "../../assets/Logo.png";
-import { IoMusicalNotesOutline } from "react-icons/io5";
+import AppIcon from "../../assets/Logo.webp";
 import { TbBuildingStore } from "react-icons/tb";
 import { BsCollectionPlay } from "react-icons/bs";
 import { MdOutlineViewTimeline } from "react-icons/md";
@@ -38,19 +37,14 @@ const Sidebar = () => {
         link: "/createpost",
       },
       {
-        title: "Marketplace",
+        title: "All Blogs",
         icon: <TbBuildingStore size={20} />,
-        link: "/All Blogs",
+        link: "/all-blogs",
       },
       {
         title: "Add Category",
         icon: <BsCollectionPlay size={20} />,
         link: "/categories",
-      },
-      {
-        title: "Timeline",
-        icon: <MdOutlineViewTimeline size={20} />,
-        link: "/timeline",
       },
     ],
     []

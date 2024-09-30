@@ -1,7 +1,7 @@
-import MobileImage from "../../assets/MobileVpn.png";
-import Mobile1 from "../../assets/Growth.png";
-import Mobile2 from "../../assets/Download.png";
-import backgroundImage from "../../assets/Circle.png";
+import MobileImage from "../../assets/MobileVpn.webp";
+import Mobile1 from "../../assets/Growth.webp";
+import Mobile2 from "../../assets/Download.webp";
+import backgroundImage from "../../assets/Circle.webp";
 import { motion } from "framer-motion";
 import CustomLink from "../buttons/CustomLink";
 import "../../App.css";

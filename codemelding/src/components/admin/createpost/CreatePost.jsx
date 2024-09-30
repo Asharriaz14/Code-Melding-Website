@@ -84,7 +84,7 @@ function CreatePost() {
         setPublishError(data.message || "An error occurred");
       } else {
         setPublishError(null);
-        // navigate(`/post/${data.slug}`);
+        navigate(`/blog/${data.slug}`);
         setFormData({
           title: "",
           category: "uncategorized",
@@ -95,6 +95,7 @@ function CreatePost() {
         setPreviewImage(null);
       }
     } catch (error) {
+      console.log(error);
       setPublishError("Something went wrong");
     } finally {
       setIsSubmitting(false);

@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
-    "@splinetool/react-spline": "^4.0.0",
-    "@tanstack/react-query": "^5.55.4",
     "express": "^4.19.2",
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",
@@ -21,7 +19,6 @@
     "quill-image-resize-module": "^3.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.53.0",
     "react-icons": "^5.3.0",
     "react-lazyload": "^3.2.1",
     "react-quill": "^2.0.0",
