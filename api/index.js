@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 // import postRoute from './routes/post.route.js'
 import BlogRoute from './routes/blog.route.js'
 import CategoryRoute from './routes/categories.route.js'
+import path from 'path';
 
 dotenv.config();
 mongoose.connect(process.env.MONGO).then(()=> {
@@ -14,7 +15,7 @@ mongoose.connect(process.env.MONGO).then(()=> {
 }).catch((err)=> {
     console.log(err);
 })
-
+const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
@@ -33,6 +34,11 @@ app.use('/api/auth' , authRoutes);
 app.use('/api/post',  BlogRoute );
 app.use('/api/category', CategoryRoute);
 
+app.use(express.static(path.join(__dirname, "/codemelding/dist")));
+
+app.get("*", (res,req)=> {
+    res.sendFile(path.join(__dirname, 'codemelding', 'dist', 'index.html'));
+});
 
 
 app.use ((err, req, res, next) => {
