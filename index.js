@@ -4,7 +4,7 @@ import express from 'express';
 const app = express();
 
 // Simple test route to check if the API is working
-app.get('/current', (req, res) => {
+app.get('/', (req, res) => {
     // Get the current date and time
     const now = new Date();
     // Return the current date and time as a JSON response
