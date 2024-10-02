@@ -32,7 +32,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: '*', // Replace this with your live frontend URL
+    origin: 'http://localhost:5173/', // Replace this with your live frontend URL
     methods: 'GET,POST,PUT,DELETE',
     credentials: true // Allows cookies and other credentials to be sent
 }));
