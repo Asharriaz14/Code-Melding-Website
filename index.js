@@ -4,8 +4,8 @@ import express from 'express';
 const app = express();
 
 // Simple test route to check if the API is working
-app.use('/test', (req, res) => {
-    res.send( message: "Vercel is working!" );
+app.get('/test', (req, res) => {
+    res.status(200).json({ message: "Vercel is working!" });
 });
 
 // Start the server
