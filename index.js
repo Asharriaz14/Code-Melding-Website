@@ -32,9 +32,9 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5173/', // Replace this with your live frontend URL
+    origin: 'http://localhost:5173', // Allow requests from this origin during development
     methods: 'GET,POST,PUT,DELETE',
-    credentials: false // Allows cookies and other credentials to be sent
+    credentials: true // Allow credentials such as cookies to be sent
 }));
 
 // Serve static files from the 'uploads' folder
