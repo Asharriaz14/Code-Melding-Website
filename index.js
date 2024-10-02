@@ -32,7 +32,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow requests from this origin during development
+    origin: '*', // Allow requests from this origin during development
     methods: 'GET,POST,PUT,DELETE',
     credentials: true // Allow credentials such as cookies to be sent
 }));
