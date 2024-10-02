@@ -41,6 +41,8 @@ const upload = multer({
   { name: 'sections[3][image]', maxCount: 1 },
   { name: 'sections[4][image]', maxCount: 1 },
   { name: 'sections[5][image]', maxCount: 1 },
+  { name: 'sections[6][image]', maxCount: 1 },
+  { name: 'sections[7][image]', maxCount: 1 },
   // Add more fields if necessary for additional sections
 ]);
 
@@ -63,12 +65,14 @@ export const create = async (req, res, next) => {
       .join('-')
       .toLowerCase()
       .replace(/[^a-zA-Z0-9-]/g, '-');
-    
+
     const slug = postId;
 
-    // Safely handle sections field
     const sections = req.body.sections;
     const parsedSections = typeof sections === 'string' ? JSON.parse(sections) : sections;
+
+    // Convert filename to image URL
+    const baseUrl = 'http://code-melding-website.vercel.app/uploads/';
 
     const newPost = new Post({
       title: req.body.title,
@@ -76,9 +80,9 @@ export const create = async (req, res, next) => {
       content: req.body.content,
       slug,
       userId: req.user.id,
-      image: req.files['blogImage'] ? req.files['blogImage'][0].filename : null,
+      image: req.files['blogImage'] ? baseUrl + req.files['blogImage'][0].filename : null,
       sections: parsedSections.map((section, index) => ({
-        image: req.files[`sections[${index}][image]`] ? req.files[`sections[${index}][image]`][0].filename : null,
+        image: req.files[`sections[${index}][image]`] ? baseUrl + req.files[`sections[${index}][image]`][0].filename : null,
         text: section.text,
       })),
     });
@@ -86,11 +90,14 @@ export const create = async (req, res, next) => {
     try {
       const savedPost = await newPost.save();
       res.status(201).json(savedPost);
+      // console.log(newPost);
     } catch (error) {
       next(error);
     }
   });
+
 };
+
 
 export const getposts = async (req, res, next) => {
     try {
