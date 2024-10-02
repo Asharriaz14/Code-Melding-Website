@@ -43,15 +43,19 @@ app.use('/uploads', express.static('uploads'));
 // Middleware to parse cookies
 app.use(cookieParser());
 
+// Root route to check if the server is working
+app.get('/', (req, res) => {
+    res.send('API is working!');
+});
+
 // API routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', BlogRoute); // Assuming BlogRoute is handling the blog posts
 app.use('/api/category', CategoryRoute);
 
-
 // Global error handling middleware
-app.use((err, req, res, next) =>    {
+app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || 'Internal Server Error';
     res.status(statusCode).json({
