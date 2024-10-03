@@ -4,6 +4,12 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "index.js" },
-   { "src" : "/(.*)", "dest" : "/" }
+    { "src": "/(.*)", "dest": "/index.html" }  
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
