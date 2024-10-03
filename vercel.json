@@ -6,10 +6,5 @@
     { "src": "/api/(.*)", "dest": "index.js" },
     { "src": "/(.*)", "dest": "/index.html" }  
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
+ 
 }
