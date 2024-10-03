@@ -48,9 +48,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', BlogRoute); // Assuming BlogRoute is handling the blog posts
 app.use('/api/category', CategoryRoute);
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+
 
 // Global error handling middleware
 app.use((err, req, res, next) =>    {
