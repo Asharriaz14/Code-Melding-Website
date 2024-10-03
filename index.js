@@ -32,7 +32,7 @@ app.use(express.json());
 
 // CORS configuration
 app.use(cors({
-    origin: 'https://codemelding.com/', // Replace this with your live frontend URL
+    origin: 'https://codemelding.com', // Replace this with your live frontend URL
     methods: 'GET,POST,PUT,DELETE',
     credentials: true // Allows cookies and other credentials to be sent
 }));
