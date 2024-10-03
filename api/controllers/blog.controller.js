@@ -52,9 +52,9 @@ export const create = async (req, res, next) => {
       return next(errorHandler(400, err.message));
     }
 
-    if (!req.user.isAdmin) {
-      return next(errorHandler(403, "You are not allowed to create a post"));
-    }
+    // if (!req.user.isAdmin) {
+    //   return next(errorHandler(403, "You are not allowed to create a post"));
+    // }
 
     if (!req.body.title) {
       return next(errorHandler(400, "Please Enter Your Title"));
