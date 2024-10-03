@@ -73,6 +73,7 @@ export const create = async (req, res, next) => {
 
     // Convert filename to image URL
     const baseUrl = 'http://code-melding-website.vercel.app/uploads/';
+    // const baseUrl = 'http://localhost:3000/uploads/';
 
     const newPost = new Post({
       title: req.body.title,
