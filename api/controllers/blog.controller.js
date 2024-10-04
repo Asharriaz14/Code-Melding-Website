@@ -48,6 +48,7 @@ export const create = async (req, res, next) => {
       });
       newPost.image = result.secure_url; // Store the image URL
     } catch (error) {
+console.error("Cloudinary upload error:", error);
       return next(errorHandler(500, "Error uploading image to Cloudinary"));
     }
   }
