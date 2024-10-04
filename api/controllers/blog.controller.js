@@ -29,8 +29,8 @@ const upload = multer({
 
 // Initialize Vercel Storage
 const storageClient = new VercelStorage({
-  token: process.env.VERCEL_TOKEN, // Store this in environment variables
-  projectId: process.env.VERCEL_PROJECT_ID, // Store this in environment variables
+  token: YIHhbBo7LXWog0mnlcJ3Kaif, // Store this in environment variables
+  projectId: prj_KJBXOHieL5DUhZUIttF7rt2rw94p, // Store this in environment variables
 });
 
 // Upload file to Vercel Storage
