@@ -1,13 +1,14 @@
 import cloudinary from 'cloudinary';
 import Post from '../models/blog.model.js'; 
 import {errorHandler} from '../utils/error.js'; 
-
+import dotenv from 'dotenv';
+dotenv.config();
+// Cloudinary configuration
 cloudinary.config({
-  cloud_name: "ddmzfkofm",
-  api_key: "733722714695754",
-  api_secret: "PgoVseiOzu2vEhXVekfI7giruSo",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 
 export const create = async (req, res, next) => {
   if (!req.user.isAdmin) {
