@@ -65,6 +65,7 @@ export const create = async (req, res, next) => {
     }));
     newPost.sections = sectionImages;
   } catch (error) {
+    console.error("Cloudinary upload error:", error);
     return next(errorHandler(500, "Error uploading section images to Cloudinary"));
   }
 
