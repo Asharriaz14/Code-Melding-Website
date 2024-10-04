@@ -1,18 +1,13 @@
 import multer from 'multer';
-import path from 'path';
 import Post from '../models/blog.model.js'; // Adjust the import based on your project structure
 import { errorHandler } from '../utils/error.js'; // Adjust the import based on your project structure
-import { VercelStorage } from 'vercel-storage'; // Vercel Storage SDK
-import fs from 'fs';
+import { Blob } from '@vercel/blob';
 
-// Set up multer to handle file uploads
-const storage = multer.memoryStorage(); // Use memory storage instead of disk storage
-
+// Set up multer (no need for disk storage since we are using Vercel Blob)
 const upload = multer({
-  storage: storage,
   limits: { fileSize: 1024 * 1024 * 5 }, // Limit image size to 5MB
   fileFilter: function (req, file, cb) {
-    checkFileType(file, cb); // Use the same file type checking function
+    checkFileType(file, cb);
   }
 }).fields([
   { name: 'blogImage', maxCount: 1 },
@@ -24,29 +19,12 @@ const upload = multer({
   { name: 'sections[5][image]', maxCount: 1 },
   { name: 'sections[6][image]', maxCount: 1 },
   { name: 'sections[7][image]', maxCount: 1 },
-  // Add more fields if necessary for additional sections
 ]);
-
-// Initialize Vercel Storage
-const storageClient = new VercelStorage({
-  token: YIHhbBo7LXWog0mnlcJ3Kaif, // Store this in environment variables
-  projectId: prj_KJBXOHieL5DUhZUIttF7rt2rw94p, // Store this in environment variables
-});
-
-// Upload file to Vercel Storage
-async function uploadToVercel(file) {
-  try {
-    const result = await storageClient.upload(file.buffer, `/uploads/${file.originalname}`);
-    return result.url; // Return the URL of the uploaded file
-  } catch (err) {
-    throw new Error('Failed to upload to Vercel Storage');
-  }
-}
 
 // Check file type (image only)
 function checkFileType(file, cb) {
   const filetypes = /jpeg|jpg|png|gif/;
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const extname = filetypes.test(file.originalname.toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
 
   if (extname && mimetype) {
@@ -56,7 +34,17 @@ function checkFileType(file, cb) {
   }
 }
 
-// Create new blog post
+// Function to upload files to Vercel Blob
+async function uploadToVercelBlob(file) {
+  const blob = new Blob();
+  const result = await blob.upload(file.buffer, {
+    filename: file.originalname,
+    contentType: file.mimetype,
+  });
+
+  return result.url; // Return the file URL
+}
+
 export const create = async (req, res, next) => {
   upload(req, res, async function (err) {
     if (err) {
@@ -82,43 +70,37 @@ export const create = async (req, res, next) => {
     const sections = req.body.sections;
     const parsedSections = typeof sections === 'string' ? JSON.parse(sections) : sections;
 
-    // Base URL for accessing uploaded images
-    const baseUrl = 'https://your-vercel-storage-url/uploads/';
+    // Process file uploads using Vercel Blob
+    const baseUrl = 'https://code-melding-website.vercel.app/uploads/'; // Replace with your actual Vercel project URL
 
     let blogImageUrl = null;
-    let sectionImages = [];
+    if (req.files['blogImage']) {
+      blogImageUrl = await uploadToVercelBlob(req.files['blogImage'][0]);
+    }
+
+    const sectionImages = await Promise.all(
+      parsedSections.map(async (section, index) => {
+        if (req.files[`sections[${index}][image]`]) {
+          return await uploadToVercelBlob(req.files[`sections[${index}][image]`][0]);
+        }
+        return null;
+      })
+    );
+
+    const newPost = new Post({
+      title: req.body.title,
+      category: req.body.category,
+      content: req.body.content,
+      slug,
+      userId: req.user.id,
+      image: blogImageUrl,
+      sections: parsedSections.map((section, index) => ({
+        image: sectionImages[index],
+        text: section.text,
+      })),
+    });
 
     try {
-      // Upload blog image to Vercel Storage
-      if (req.files['blogImage']) {
-        const blogImage = req.files['blogImage'][0];
-        blogImageUrl = await uploadToVercel(blogImage);
-      }
-
-      // Upload section images to Vercel Storage
-      for (let i = 0; i < parsedSections.length; i++) {
-        if (req.files[`sections[${i}][image]`]) {
-          const sectionImage = req.files[`sections[${i}][image]`][0];
-          const sectionImageUrl = await uploadToVercel(sectionImage);
-          sectionImages[i] = sectionImageUrl;
-        } else {
-          sectionImages[i] = null;
-        }
-      }
-
-      const newPost = new Post({
-        title: req.body.title,
-        category: req.body.category,
-        content: req.body.content,
-        slug,
-        userId: req.user.id,
-        image: blogImageUrl, // URL from Vercel Storage
-        sections: parsedSections.map((section, index) => ({
-          image: sectionImages[index] ? sectionImages[index] : null, // Use uploaded URL
-          text: section.text,
-        })),
-      });
-
       const savedPost = await newPost.save();
       res.status(201).json(savedPost);
     } catch (error) {
@@ -126,6 +108,7 @@ export const create = async (req, res, next) => {
     }
   });
 };
+
 
 
 export const getposts = async (req, res, next) => {
